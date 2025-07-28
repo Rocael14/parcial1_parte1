@@ -116,9 +116,22 @@ while True:
                 print("Buscar Empleados")
                 codigo_buscar = int(input("Ingrese el codigo del empleado a buscar: "))
                 if codigo_buscar in empleados:
-                   for empleado in empleados[codigo_buscar].values():
-                       print(f"Codigo del empleado: {codigo_buscar}")
-                       print(f"Nombre completo: {empleado['datos_generales']['nombre_completo']}")
+                    for codigo_empleado, empleado in empleados.items():
+                        if codigo_empleado == codigo_buscar:
+                            print(f"Codigo del empleado: {codigo_empleado}")
+                            print(f"Nombre completo: {empleado['datos_generales']['nombre_completo']}")
+                            print(f"Departamento: {empleado['datos_generales']['departamento']}")
+                            print(f"Antiguedad: {empleado['datos_generales']['antiguedad']}")
+                            print(f"Puntualidad: {empleado['evaluacion']['puntualidad']}")
+                            print(f"Trabajo equipo: {empleado['evaluacion']['trabajo_equipo']}")
+                            print(f"Productividad: {empleado['evaluacion']['productividad']}")
+                            print(f"Observacion: {empleado['evaluacion']['observacion']}")
+                            print(f"Promedio: {empleado['evaluacion']['promedio']}")
+                            print(f"Estado: {empleado['evaluacion']['estado']}")
+                            print(f"Telefono: {empleado['contacto']['telefono']}")
+                            print(f"Correo electronico: {empleado['contacto']['correo_electronico']}")
+                        else:
+                            continue
 
                 else:
                     print("El codigo no existe")
