@@ -7,13 +7,9 @@ class Empleado:
 
 class Evaluacion:
     def __init__(self, puntualidad, trabajo_equipo, productividad, observacion):
-        self.puntualidad = puntualidad
-        self.trabajo_equipo = trabajo_equipo
-        self.productividad = productividad
-        self.observacion = observacion
-
+        self.evaluacion = {'puntualidad' : puntualidad, 'trabajo_equipo' : trabajo_equipo, 'productividad' : productividad, 'observacion' : observacion }
     def promedio(self):
-        promedio = self.puntualidad + self.trabajo_equipo + self.productividad/3
+        promedio = self.evaluacion['productividad'] + self.evaluacion['puntualidad'] + self.evaluacion['trabajo_equipo'] / 3
         if promedio >= 7:
             return print("Satisfactorio")
         elif promedio <= 6:
@@ -47,47 +43,54 @@ while True:
                 else:
                     for empleado in range(cantidad_empleados):
                         codigo_empleado=int(input(f"Ingrese el codigo del empleado #{empleado+1}"))
-                        for codigo in empleados.keys():
-                            if codigo == codigo_empleado:
-                                print("Codigo ya se encuentra registrado")
-                        nombre_completo=input(f"Ingrese el nombre completo del empleado #{empleado+1}: ")
-                        departamento=input(f"Ingrese el departamento del empleado #{empleado+1}: ")
-                        antiguedad=int(input(f"Ingrese los años de antiguedad del empleado #{empleado+1}: "))
-                        if antiguedad<= 0:
-                            print("La cantidad debe ser mayor a 0")
-                        else:
-                            puntualidad = int(input(f"Ingrese la puntualidad del empleado #{empleado+1} (0-10): "))
-                            if puntualidad <= 0:
+                        if codigo_empleado not in empleados:
+                            nombre_completo=input(f"Ingrese el nombre completo del empleado #{empleado+1}: ")
+                            departamento=input(f"Ingrese el departamento del empleado #{empleado+1}: ")
+                            antiguedad=int(input(f"Ingrese los años de antiguedad del empleado #{empleado+1}: "))
+                            if antiguedad<= 0:
                                 print("La cantidad debe ser mayor a 0")
                             else:
-                                trabajo_equipo = int(input(f"Ingrese el trabajo en equipo del empleado #{empleado + 1} (0-10): "))
+                                puntualidad = int(input(f"Ingrese la puntualidad del empleado #{empleado+1} (0-10): "))
                                 if puntualidad <= 0:
                                     print("La cantidad debe ser mayor a 0")
                                 else:
-                                    productividad = int( input(f"Ingrese la productividad del empleado #{empleado + 1} (0-10): "))
+                                    trabajo_equipo = int(input(f"Ingrese el trabajo en equipo del empleado #{empleado + 1} (0-10): "))
                                     if puntualidad <= 0:
                                         print("La cantidad debe ser mayor a 0")
                                     else:
-                                        observaciones = input(f"Ingrese alguna observaciones del empleado #{empleado+1}: ")
-                                        evaluacion = Evaluacion(puntualidad, trabajo_equipo, productividad, observaciones)
-                                        telefono= int(input(f"Ingrese el numero de telefono del empleado #{empleado+1}: "))
-                                        correo_electronico = input(f"Ingrese el correo electric del empleado #{empleado+1}: ")
-                                        empleados[codigo_empleado] = {
-                                            "datos_generales" : {
-                                                "nombre_completo": nombre_completo,
-                                                "departamento": departamento,
-                                                "antiguedad": antiguedad
-                                            },
-                                            "evaluacion" : evaluacion,
-                                            "contacto":{
-                                                "telefono": telefono,
-                                                "correo_electric": correo_electronico
+                                        productividad = int( input(f"Ingrese la productividad del empleado #{empleado + 1} (0-10): "))
+                                        if puntualidad <= 0:
+                                            print("La cantidad debe ser mayor a 0")
+                                        else:
+                                            observaciones = input(f"Ingrese alguna observaciones del empleado #{empleado+1}: ")
+                                            evaluacion = Evaluacion(puntualidad, trabajo_equipo, productividad, observaciones)
+                                            telefono= int(input(f"Ingrese el numero de telefono del empleado #{empleado+1}: "))
+                                            correo_electronico = input(f"Ingrese el correo electric del empleado #{empleado+1}: ")
+                                            empleados[codigo_empleado] = {
+                                                "datos_generales" : {
+                                                    "nombre_completo": nombre_completo,
+                                                    "departamento": departamento,
+                                                    "antiguedad": antiguedad
+                                                },
+                                                "evaluacion" : evaluacion,
+                                                "contacto":{
+                                                    "telefono": telefono,
+                                                    "correo_electric": correo_electronico
+                                                }
                                             }
-                                        }
+                        else:
+                            print("El codigo ya existe")
 
 
             case 2:
                 print("Buscar Empleado")
+                for codigo_empleado, empleado in empleados.items():
+                    print(f"Codigo del empleado: {codigo_empleado}")
+                    print(f"Nombre completo: {empleado['datos_generales']['nombre_completo']}")
+                    print(f"Departamento: {empleado['datos_generales']['departamento']}")
+                    print(f"Antiguedad: {empleado['datos_generales']['antiguedad']}")
+                    print(f"Puntualidad: {empleado['evaluacion']}")
+
             case 3:
                 print("Empleados satisfactorio")
             case 4:
