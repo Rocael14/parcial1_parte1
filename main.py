@@ -8,12 +8,14 @@ class Empleado:
 class Evaluacion:
     def __init__(self, puntualidad, trabajo_equipo, productividad, observacion):
         self.evaluacion = {'puntualidad' : puntualidad, 'trabajo_equipo' : trabajo_equipo, 'productividad' : productividad, 'observacion' : observacion }
-    def promedio(self):
+    def Promedio(self):
         promedio = self.evaluacion['productividad'] + self.evaluacion['puntualidad'] + self.evaluacion['trabajo_equipo'] / 3
+        return promedio
+    def Estado(self,promedio):
         if promedio >= 7:
-            return print("Satisfactorio")
+            return "Satisfactorio"
         elif promedio <= 6:
-            return print("Mejorar")
+            return "Mejorar"
 
 class InformacionPersonal:
     def __init__(self, telefono, correo_electronico):
@@ -24,10 +26,11 @@ class InformacionPersonal:
 def Menu():
     print("---Menu---")
     print("1. Agregar Empleado")
-    print("2. Buscar Empleado")
-    print("3. Empleados satisfactorio")
-    print("4. Mejores Empleados")
-    print("5. Salir")
+    print("2. Lista de Empleados")
+    print("3. Buscar Empleado")
+    print("4. Empleados satisfactorio")
+    print("5. Mejores Empleados")
+    print("6. Salir")
 
 empleados = {}
 while True:
@@ -64,6 +67,7 @@ while True:
                                         else:
                                             observaciones = input(f"Ingrese alguna observaciones del empleado #{empleado+1}: ")
                                             evaluacion = Evaluacion(puntualidad, trabajo_equipo, productividad, observaciones)
+                                            promedio = evaluacion.Promedio()
                                             telefono= int(input(f"Ingrese el numero de telefono del empleado #{empleado+1}: "))
                                             correo_electronico = input(f"Ingrese el correo electric del empleado #{empleado+1}: ")
                                             empleados[codigo_empleado] = {
@@ -72,10 +76,17 @@ while True:
                                                     "departamento": departamento,
                                                     "antiguedad": antiguedad
                                                 },
-                                                "evaluacion" : evaluacion,
+                                                "evaluacion" : {
+                                                    "puntualidad": puntualidad,
+                                                    "trabajo_equipo": trabajo_equipo,
+                                                    "productividad": productividad,
+                                                    "observacion": observaciones,
+                                                    "promedio": promedio,
+                                                    "estado": evaluacion.Estado(promedio)
+                                                },
                                                 "contacto":{
                                                     "telefono": telefono,
-                                                    "correo_electric": correo_electronico
+                                                    "correo_electronico": correo_electronico
                                                 }
                                             }
                         else:
@@ -83,19 +94,28 @@ while True:
 
 
             case 2:
-                print("Buscar Empleado")
+                print("Lista Empleado")
                 for codigo_empleado, empleado in empleados.items():
                     print(f"Codigo del empleado: {codigo_empleado}")
                     print(f"Nombre completo: {empleado['datos_generales']['nombre_completo']}")
                     print(f"Departamento: {empleado['datos_generales']['departamento']}")
                     print(f"Antiguedad: {empleado['datos_generales']['antiguedad']}")
-                    print(f"Puntualidad: {empleado['evaluacion']}")
+                    print(f"Puntualidad: {empleado['evaluacion']['puntualidad']}")
+                    print(f"Trabajo equipo: {empleado['evaluacion']['trabajo_equipo']}")
+                    print(f"Productividad: {empleado['evaluacion']['productividad']}")
+                    print(f"Observacion: {empleado['evaluacion']['observacion']}")
+                    print(f"Promedio: {empleado['evaluacion']['promedio']}")
+                    print(f"Estado: {empleado['evaluacion']['estado']}")
+                    print(f"Telefono: {empleado['contacto']['telefono']}")
+                    print(f"Correo electronico: {empleado['contacto']['correo_electronico']}")
 
             case 3:
-                print("Empleados satisfactorio")
+                print("Buscar Empleados")
             case 4:
-                print("Mejores Empleados")
+                print("Empleados satisfactorio")
             case 5:
+                print("Mejores Empleados")
+            case 6:
                 print("Gracias por usar el programa")
             case _:
                 print("Opcion invalida")
