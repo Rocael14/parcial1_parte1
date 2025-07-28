@@ -7,9 +7,12 @@ class Empleado:
 
 class Evaluacion:
     def __init__(self, puntualidad, trabajo_equipo, productividad, observacion):
-        self.evaluacion = {'puntualidad' : puntualidad, 'trabajo_equipo' : trabajo_equipo, 'productividad' : productividad, 'observacion' : observacion }
+        self.puntualidad = puntualidad
+        self.trabajo_equipo = trabajo_equipo
+        self.productividad = productividad
+        self.observacion = observacion
     def Promedio(self):
-        promedio = self.evaluacion['productividad'] + self.evaluacion['puntualidad'] + self.evaluacion['trabajo_equipo'] / 3
+        promedio = self.puntualidad + self.trabajo_equipo + self.productividad/ 3
         return promedio
     def Estado(self,promedio):
         if promedio >= 7:
@@ -111,6 +114,14 @@ while True:
 
             case 3:
                 print("Buscar Empleados")
+                codigo_buscar = int(input("Ingrese el codigo del empleado a buscar: "))
+                if codigo_buscar in empleados:
+                   for empleado in empleados[codigo_buscar].values():
+                       print(f"Codigo del empleado: {codigo_buscar}")
+                       print(f"Nombre completo: {empleado['datos_generales']['nombre_completo']}")
+
+                else:
+                    print("El codigo no existe")
             case 4:
                 print("Empleados satisfactorio")
             case 5:
